@@ -1,14 +1,16 @@
 package com.thoms.silonaanak;
 
-import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ public class MasukActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     DatabaseReference reference;
     PermissionManager manager;
+    Button btnDaftar;
 
 
     @Override
@@ -47,23 +50,35 @@ public class MasukActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_masuk);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Hangyaboly.ttf")
+                .setDefaultFontPath("font/hangyaboly.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());
 
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
+        btnDaftar = findViewById(R.id.btnDaftar);
 
         if (firebaseUser == null){
-            setContentView(R.layout.activity_masuk);
+
             ed_email = (EditText)findViewById(R.id.input_email);
             ed_password = (EditText)findViewById(R.id.input_password);
+            ed_password.setTypeface(Typeface.DEFAULT);
+            ed_password.setTransformationMethod(new PasswordTransformationMethod());
 
             reference = FirebaseDatabase.getInstance().getReference().child("Informasi_Anak");
             manager = new PermissionManager() {};
 
             manager.checkAndRequestPermissions(this);
+
+            btnDaftar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getApplicationContext(),DaftarActivity.class);
+                    startActivity(i);
+                }
+            });
         }
         else {
             finish();

@@ -7,8 +7,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+
 public class MainActivity extends AppCompatActivity {
     private ImageView silona,family;
+    FirebaseAuth auth;
+    FirebaseUser firebaseUser;
+    DatabaseReference reference;
 
 
 
@@ -23,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
         Animation myanim = AnimationUtils.loadAnimation(this,R.anim.mytransition);
         silona.startAnimation(myanim);
 
+        auth = FirebaseAuth.getInstance();
+        firebaseUser = auth.getCurrentUser();
+
+
+
         final Intent i = new Intent(this,HomeActivity.class);
         Thread timer = new Thread(){
             public void run (){
@@ -32,8 +44,17 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 finally {
-                    startActivity(i);
-                    finish();
+                    /*startActivity(i);
+                    finish();*/
+
+                    if (firebaseUser == null){
+                        finish();
+                        startActivity(i);
+                    }else {
+                        finish();
+                        Intent myIntent = new Intent(MainActivity.this,MapsActivity.class);
+                        startActivity(myIntent);
+                    }
                 }
             }
         };

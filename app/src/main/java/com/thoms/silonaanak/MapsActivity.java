@@ -50,6 +50,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -88,15 +89,18 @@ public class MapsActivity extends AppCompatActivity
 
     StorageReference storageReference;
 
-    TextView textNama,textEmail;
+    TextView textNama,textEmail,textUser;
 
     GoogleApiClient client;
     LocationRequest request;
+    DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        FirebaseApp.initializeApp(MapsActivity.this);
+        ref = FirebaseDatabase.getInstance().getReference().child("Informasi_Anak");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         auth = FirebaseAuth.getInstance();
@@ -123,16 +127,24 @@ public class MapsActivity extends AppCompatActivity
 
         textNama = (TextView) header.findViewById(R.id.namaTxt);
         textEmail = (TextView) header.findViewById(R.id.emailTxt);
+        textUser = (TextView) header.findViewById(R.id.userTxt);
         img_profile = (ImageView) header.findViewById(R.id.img_profile);
 
         anakReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 AnakDaftar anakDaftar = dataSnapshot.getValue(AnakDaftar.class);
+                String nama = anakDaftar.getNama();
+                String User = anakDaftar.getUsername();
 
-                textNama.setText(anakDaftar.nama);
-                textEmail.setText(anakDaftar.email);
-                Picasso.get().load(anakDaftar.imageUrl).into(img_profile);
+
+                textNama.setText(anakDaftar.getNama());
+                textUser.setText(anakDaftar.getUsername());
+                textEmail.setText(anakDaftar.getEmail());
+                if (!anakDaftar.getImageUrl().equals("na")){
+                    Picasso.get().load(anakDaftar.imageUrl).into(img_profile);
+                }
+
             }
 
             @Override
@@ -201,6 +213,11 @@ public class MapsActivity extends AppCompatActivity
 
                         }
                     });
+        }
+        else if (id == R.id.bantuan) {
+            Intent myIntent = new Intent(MapsActivity.this, BantuanDalam.class);
+            startActivity(myIntent);
+            finish();
         }
 
         else if(id == R.id.exit)
@@ -311,7 +328,7 @@ public class MapsActivity extends AppCompatActivity
 
             MarkerOptions options = new MarkerOptions();
             options.position(latLngStart);
-            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            options.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
             options.title("Lokasi Kamu");
 
             if(currentMarker== null)
@@ -327,7 +344,6 @@ public class MapsActivity extends AppCompatActivity
 
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLngStart, 15);
             mMap.moveCamera(update);
-
 
         }
     }

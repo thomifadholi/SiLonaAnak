@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.thoms.silonaanak.MapsActivity;
+import com.thoms.silonaanak.Model.LatLonKirim;
 import com.thoms.silonaanak.R;
 
 
@@ -114,7 +115,7 @@ public class LocationShareService extends Service implements LocationListener, G
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(client, request, this);
 
-        notification.setSmallIcon(R.drawable.location);
+        notification.setSmallIcon(R.drawable.gps);
         notification.setTicker("Pemberitahuan.");
         notification.setWhen(System.currentTimeMillis());
         notification.setContentTitle("SiLona Anak");
@@ -173,83 +174,73 @@ public class LocationShareService extends Service implements LocationListener, G
        // calendar.setTimeInMillis(calendar.getTimeInMillis() + (secs*10000));
         String day = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(dates.getTime());
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd MMM yyyy, HH:mm:ss", Locale.getDefault());
-        final String myDate = sdf1.format(date);
+        final String myDate         = sdf1.format(date);
 
-
-
+        LatLonKirim latLonKirim  = new LatLonKirim(String.valueOf(latLngCurrent.latitude),String.valueOf(latLngCurrent.longitude));
+        String tanggal           = new SimpleDateFormat("yyyyMMdd").format(new Date());
 
         if (day.equals("Monday")) {
             anakReference.child(user.getUid()).child("Senin").child("lasttime").setValue(myDate);
             anakReference.child(user.getUid()).child("Senin").child("latitude").setValue(String.valueOf(latLngCurrent.latitude));
             anakReference.child(user.getUid()).child("Senin").child("longitude").setValue(String.valueOf(latLngCurrent.longitude));
 
+            String key =  anakReference.child(user.getUid()).child("Senin").child("listLatLon").child(tanggal).push().getKey();
+            anakReference.child(user.getUid()).child("Senin").child("listLatLon").child(tanggal).child(key).setValue(latLonKirim);
         }
        else if (day.equals("Tuesday")) {
             anakReference.child(user.getUid()).child("Selasa").child("lasttime").setValue(myDate);
             anakReference.child(user.getUid()).child("Selasa").child("latitude").setValue(String.valueOf(latLngCurrent.latitude));
             anakReference.child(user.getUid()).child("Selasa").child("longitude").setValue(String.valueOf(latLngCurrent.longitude));
 
+            String key =  anakReference.child(user.getUid()).child("Selasa").child("listLatLon").child(tanggal).push().getKey();
+            anakReference.child(user.getUid()).child("Selasa").child("listLatLon").child(tanggal).child(key).setValue(latLonKirim);
+
         }
         else if (day.equals("Wednesday")) {
-          /*  Timer timer = new Timer();
-            timer.scheduleAtFixedRate(new TimerTask()
-            {
-                public void run()
-                {*/
 
-                    anakReference.child(user.getUid()).child("Rabu").child("lasttime").push().setValue(myDate);
-                    anakReference.child(user.getUid()).child("Rabu").child("latitude").push().setValue(String.valueOf(latLngCurrent.latitude));
-                    anakReference.child(user.getUid()).child("Rabu").child("longitude").push().setValue(String.valueOf(latLngCurrent.longitude));
+            anakReference.child(user.getUid()).child("Rabu").child("lasttime").setValue(myDate);
+            anakReference.child(user.getUid()).child("Rabu").child("latitude").setValue(String.valueOf(latLngCurrent.latitude));
+            anakReference.child(user.getUid()).child("Rabu").child("longitude").setValue(String.valueOf(latLngCurrent.longitude));
 
-     /*   }
-                    }, delay, period);*/
-
-           /* for (int i=0; i<riwayat.length ; i++)  {
-                anakReference.child(user.getUid()).child("Rabu").child(riwayat[0] + i).push().setValue(myDate);
-                anakReference.child(user.getUid()).child("Rabu").child(riwayat[1] + i).push().setValue(String.valueOf(latLngCurrent.latitude));
-                anakReference.child(user.getUid()).child("Rabu").child(riwayat[2] + i).push().setValue(String.valueOf(latLngCurrent.longitude));
-
-            }*/
-
-
+            String key =  anakReference.child(user.getUid()).child("Rabu").child("listLatLon").child(tanggal).push().getKey();
+            anakReference.child(user.getUid()).child("Rabu").child("listLatLon").child(tanggal).child(key).setValue(latLonKirim);
         }
-
-        /*    for (int i=0; i<Lasttime.length ; i++)  {
-                anakReference.child(user.getUid()).child("Rabu").push().child(Lasttime[i]+ i).setValue(myDate);}
-
-                for (int a=0; a<Latitude.length; a++) {
-                    anakReference.child(user.getUid()).child("Rabu").push().child(Latitude[a] + a).setValue(String.valueOf(latLngCurrent.latitude));
-
-                }for (int b=0; b<Longitude.length; b++) {
-                        anakReference.child(user.getUid()).child("Rabu").push().child(Longitude[b]+ b).setValue(String.valueOf(latLngCurrent.longitude));
-
-                    } */
 
         else if (day.equals("Thursday")) {
 
-            anakReference.child(user.getUid()).child("Kamis").child("lasttime").push().setValue(myDate);
-            anakReference.child(user.getUid()).child("Kamis").child("latitude").push().setValue(String.valueOf(latLngCurrent.latitude));
-            anakReference.child(user.getUid()).child("Kamis").child("longitude").push().setValue(String.valueOf(latLngCurrent.longitude));
+            anakReference.child(user.getUid()).child("Kamis").child("lasttime").setValue(myDate);
+            anakReference.child(user.getUid()).child("Kamis").child("latitude").setValue(String.valueOf(latLngCurrent.latitude));
+            anakReference.child(user.getUid()).child("Kamis").child("longitude").setValue(String.valueOf(latLngCurrent.longitude));
+
+            String key =  anakReference.child(user.getUid()).child("Kamis").child("listLatLon").child(tanggal).push().getKey();
+            anakReference.child(user.getUid()).child("Kamis").child("listLatLon").child(tanggal).child(key).setValue(latLonKirim);
 
         }
         else if (day.equals("Friday")) {
-            anakReference.child(user.getUid()).child("Jumat").child("lasttime").push().child("Waktu").setValue(myDate);
-            anakReference.child(user.getUid()).child("Jumat").child("latitude").push().child("Lat").setValue(String.valueOf(latLngCurrent.latitude));
-            anakReference.child(user.getUid()).child("Jumat").child("longitude").push().child("Long").setValue(String.valueOf(latLngCurrent.longitude));
+            anakReference.child(user.getUid()).child("Jumat").child("lasttime").setValue(myDate);
+            anakReference.child(user.getUid()).child("Jumat").child("latitude").setValue(String.valueOf(latLngCurrent.latitude));
+            anakReference.child(user.getUid()).child("Jumat").child("longitude").setValue(String.valueOf(latLngCurrent.longitude));
+
+            String key =  anakReference.child(user.getUid()).child("Jumat").child("listLatLon").child(tanggal).push().getKey();
+            anakReference.child(user.getUid()).child("Jumat").child("listLatLon").child(tanggal).child(key).setValue(latLonKirim);
 
         }
         else if (day.equals("Saturday")) {
+            anakReference.child(user.getUid()).child("Sabtu").child("lasttime").setValue(myDate);
+            anakReference.child(user.getUid()).child("Sabtu").child("latitude").setValue(String.valueOf(latLngCurrent.latitude));
+            anakReference.child(user.getUid()).child("Sabtu").child("longitude").setValue(String.valueOf(latLngCurrent.longitude));
 
-
-            anakReference.child(user.getUid()).child("Sabtu").child("lasttime").push().setValue(myDate).toString();
-            anakReference.child(user.getUid()).child("Sabtu").child("latitude").push().setValue(String.valueOf(latLngCurrent.latitude));
-            anakReference.child(user.getUid()).child("Sabtu").child("longitude").push().setValue(String.valueOf(latLngCurrent.longitude));
+            String key =  anakReference.child(user.getUid()).child("Sabtu").child("listLatLon").child(tanggal).push().getKey();
+            anakReference.child(user.getUid()).child("Sabtu").child("listLatLon").child(tanggal).child(key).setValue(latLonKirim);
 
         }
         else if (day.equals("Sunday")) {
             anakReference.child(user.getUid()).child("Minggu").child("lasttime").setValue(myDate);
             anakReference.child(user.getUid()).child("Minggu").child("latitude").setValue(String.valueOf(latLngCurrent.latitude));
             anakReference.child(user.getUid()).child("Minggu").child("longitude").setValue(String.valueOf(latLngCurrent.longitude));
+
+            String key =  anakReference.child(user.getUid()).child("Minggu").child("listLatLon").child(tanggal).push().getKey();
+            anakReference.child(user.getUid()).child("Minggu").child("listLatLon").child(tanggal).child(key).setValue(latLonKirim);
 
         }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#263238</color>
-    <color name="colorPrimaryDark">#757575</color>
+    <color name="colorPrimaryDark">#f1a9a0</color>
     <color name="colorAccent">#ffff</color>
     <color name="colorHint">#ffffff</color>
     <color name="colorSplash">#2e3240</color>
@@ -21,6 +21,7 @@
 
     <color name="dividerColor">#013243</color>
 
+    <color name="text">#f1a9a0</color>
     <color name="white">#FFF</color>
     <color name="iron">#808db8</color>
     <color name="primary">#5c6480</color>

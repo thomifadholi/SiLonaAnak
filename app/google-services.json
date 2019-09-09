@@ -23,7 +23,7 @@
           }
         },
         {
-          "client_id": "834261417223-a9cfferrqcj82p09l99ctuui4450bi01.apps.googleusercontent.com",
+          "client_id": "834261417223-k5j08cab5vm5etv2gut11eb0sm735qom.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -33,20 +33,50 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "834261417223-a9cfferrqcj82p09l99ctuui4450bi01.apps.googleusercontent.com",
+              "client_id": "834261417223-k5j08cab5vm5etv2gut11eb0sm735qom.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834261417223:android:f45426c617411c34",
+        "android_client_info": {
+          "package_name": "com.thoms.silonaorangtua"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834261417223-1ig5q320cvn1lht43ugkbnbc39g9lps9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thoms.silonaorangtua",
+            "certificate_hash": "ed6155cced98347e8d431cc874e4bc85d53c0097"
+          }
         },
-        "ads_service": {
-          "status": 2
+        {
+          "client_id": "834261417223-k5j08cab5vm5etv2gut11eb0sm735qom.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQSyCdTd5CDufHEhkrPiIwLJiKF8cNrr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834261417223-k5j08cab5vm5etv2gut11eb0sm735qom.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
